@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -20,50 +20,35 @@ const navigation = [
     name: 'Dashboard',
     href: '/dashboard',
     icon: LayoutDashboard,
-    current: true,
   },
   {
     name: 'Reviews',
     href: '/reviews',
     icon: MessageSquare,
-    current: false,
     badge: '12',
-  },
-  {
-    name: 'Business Profiles',
-    href: '/profiles',
-    icon: Building2,
-    current: false,
   },
   {
     name: 'Analytics',
     href: '/analytics',
     icon: BarChart3,
-    current: false,
-  },
-  {
-    name: 'AI Templates',
-    href: '/templates',
-    icon: Zap,
-    current: false,
   },
   {
     name: 'Settings',
     href: '/settings',
     icon: Settings,
-    current: false,
   },
 ]
 
 export function Sidebar({ className }: SidebarProps) {
-  const [currentPath, setCurrentPath] = useState('/dashboard')
+  const location = useLocation()
+  const navigate = useNavigate()
 
   return (
     <div className={cn('flex h-full w-64 flex-col bg-gray-50 border-r', className)}>
       <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
         <nav className="mt-5 flex-1 space-y-1 px-2">
           {navigation.map((item) => {
-            const isActive = currentPath === item.href
+            const isActive = location.pathname === item.href
             return (
               <Button
                 key={item.name}
@@ -74,7 +59,7 @@ export function Sidebar({ className }: SidebarProps) {
                     ? 'bg-blue-50 text-blue-700 hover:bg-blue-100' 
                     : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                 )}
-                onClick={() => setCurrentPath(item.href)}
+                onClick={() => navigate(item.href)}
               >
                 <item.icon className="mr-3 h-5 w-5" />
                 <span className="flex-1 text-left">{item.name}</span>

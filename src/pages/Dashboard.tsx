@@ -89,11 +89,24 @@ export function Dashboard() {
 
   const handleConnectProfile = () => {
     // Simulate Google OAuth flow
-    console.log('Connecting to Google Business Profile...')
+    alert('🔗 Google Business Profile Connection\n\nThis would normally open Google OAuth to connect your business profile. In the demo, this shows how the integration would work!')
+    
+    // Simulate adding a new connected profile
+    setTimeout(() => {
+      setBusinessProfiles(prev => [...prev, {
+        id: '3',
+        name: 'New Business Location',
+        address: '789 Demo St, Demo City, DC',
+        isConnected: true,
+        lastSyncAt: new Date().toISOString(),
+        reviewCount: 45,
+        averageRating: 4.3
+      }])
+    }, 1000)
   }
 
   const handleViewAllReviews = () => {
-    console.log('Navigating to reviews page...')
+    window.location.href = '/reviews'
   }
 
   const totalReviews = businessProfiles.reduce((sum, profile) => sum + profile.reviewCount, 0)

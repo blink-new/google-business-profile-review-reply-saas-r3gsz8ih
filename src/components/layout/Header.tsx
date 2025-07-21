@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -14,6 +15,7 @@ import { blink } from '@/blink/client'
 import type { User } from '@/types'
 
 export function Header() {
+  const navigate = useNavigate()
   const [user, setUser] = useState<User | null>(null)
   const [syncStatus, setSyncStatus] = useState<'syncing' | 'synced' | 'error'>('synced')
 
@@ -33,6 +35,7 @@ export function Header() {
     // Simulate sync process
     setTimeout(() => {
       setSyncStatus('synced')
+      alert('✅ Sync Complete!\n\nSuccessfully synced 3 new reviews from your Google Business Profile.')
     }, 2000)
   }
 
@@ -94,7 +97,7 @@ export function Header() {
                 </div>
               </div>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/settings')}>
                 <Settings className="mr-2 h-4 w-4" />
                 <span>Settings</span>
               </DropdownMenuItem>

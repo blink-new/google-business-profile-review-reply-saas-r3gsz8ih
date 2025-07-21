@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Header } from '@/components/layout/Header'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Dashboard } from '@/pages/Dashboard'
+import { Reviews } from '@/pages/Reviews'
+import { Settings } from '@/pages/Settings'
+import { Analytics } from '@/pages/Analytics'
 import { blink } from '@/blink/client'
 import type { User } from '@/types'
 
@@ -75,15 +79,24 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <div className="flex">
-        <Sidebar />
-        <main className="flex-1 p-6">
-          <Dashboard />
-        </main>
+    <Router>
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <div className="flex">
+          <Sidebar />
+          <main className="flex-1 p-6">
+            <Routes>
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/reviews" element={<Reviews />} />
+              <Route path="/analytics" element={<Analytics />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Routes>
+          </main>
+        </div>
       </div>
-    </div>
+    </Router>
   )
 }
 
